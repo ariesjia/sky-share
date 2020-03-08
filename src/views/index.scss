@@ -1,0 +1,33 @@
+@import "../styles/variable/variable";
+
+.logo {
+  font-size: 30px;
+  color: $main-color;
+  text-align: center;
+  padding: 60px 0;
+  img {
+    height: 50px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.uploader {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px 0 rgba(90,94,91,.15), 0 2px 4px 0 rgba(0,0,0,.05);
+  padding: 16px;
+
+  &-inner {
+    border: 1px dashed #c5cec7;
+    border-radius: 4px;
+    padding: 20px;
+  }
+}

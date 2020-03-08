@@ -1,0 +1,15 @@
+@function px2rem($px) {
+  $rem: 37.5px;
+
+  @return ($px / $rem) + rem;
+}
+
+@mixin clearfix {
+  &:after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
