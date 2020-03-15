@@ -1,4 +1,5 @@
 import generateUUID from "@/utils/uuid";
+import {upload} from "@/utils/skynet";
 
 class Share {
 
@@ -7,8 +8,8 @@ class Share {
 
   constructor () {
     this._html = document.documentElement.outerHTML;
-    // this._key = generateUUID(6);
-    this._key = '123'
+    // @ts-ignore
+    this._key = window.SHARE_CODE;
   }
 
   get key() {
@@ -19,8 +20,19 @@ class Share {
     return btoa(this._key)
   }
 
-  public encodeData() {
+  get link() {
+    return location.href
+  }
 
+  public fork() {
+    const html = this._html.replace(
+      /<script>window.SHARE_CODE=.*<\/script>/,
+      '<script>window.SHARE_CODE="'+generateUUID()+'"<\/script>'
+    );
+    var blob = new Blob([html], { type: 'text/html' });
+    return upload(blob, 'share.html').then((res) => {
+      location.href = `https://siasky.net/${res.skylink}`
+    })
   }
 }
 

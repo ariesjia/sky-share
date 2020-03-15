@@ -1,23 +1,21 @@
 import generateUUID from './uuid'
-import {encryptFile, decryptFile } from "@/utils/crypto";
+import { decryptFile } from "@/utils/crypto";
 
 
-export const upload = (file: File, key: string) => {
+export const upload = (blob: Blob, name:  string) => {
   var formData = new FormData();
-  const uuid = generateUUID()
-  return encryptFile(file, key).then((blob) => {
-    formData.append('file', blob);
-    const filename = file.name;
-    return fetch(`https://siasky.net/skynet/skyfile/${uuid}?filename=${filename}`, {
-      method: 'POST',
-      body: formData
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        return result
-      })
+  const uuid = generateUUID(8)
+  formData.append('file', blob);
+  const filename = name;
+  return fetch(`https://siasky.net/skynet/skyfile/${uuid}?filename=${filename}`, {
+    method: 'POST',
+    body: formData
   })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      return result
+    })
 }
 
 export const download = (skylink: string, key: string, filename:string) : Promise<any> => {

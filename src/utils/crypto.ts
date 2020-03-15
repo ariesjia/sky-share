@@ -140,7 +140,9 @@ export async function decryptFile(blob: Blob, password:string, filename:string) 
           const decryptBlob = new Blob([new Uint8Array(decrypted)],
             {type: 'application/octet-stream'})
           saveAs(decryptBlob, filename);
+          resolve();
         },(e) => {
+          reject()
           console.log(e);
         })
     }
