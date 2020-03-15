@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1 class="logo">
-      <img src="../assets/logo.svg" /> Skynet Crypto Share
+      <img src="../assets/logo.png" /> Skynet Crypto Share
     </h1>
     <div class="container">
       <div class="transfer" :class="{'transfer-is-receive': isReceive}">
