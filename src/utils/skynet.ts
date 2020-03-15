@@ -32,10 +32,11 @@ export const download = (skylink: string, key: string, filename:string) : Promis
     const disposition = headers.get('content-disposition');
     console.log(disposition);
     const name = disposition ? decodeURIComponent(disposition.split('=')[1]) : filename;
+    console.log(name);
     return decryptFile(
       blob,
       key,
-      (name || '').replace(/_$/, '')
+      name
     )
   })
 }

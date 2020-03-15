@@ -100,11 +100,8 @@ export async function encryptFile(file: File, password: string) : Promise<Blob> 
 
 export async function decryptFile(blob: Blob, password:string, filename:string) {
   const fr = new FileReader(); //request a file read
-  saveAs(blob, filename);
   return new Promise((resolve, reject) => {
-
     fr.onload = async () => { //load
-
       async function deriveDecryptionSecretKey() { //derive the secret key from a master key.
         const getSecretKey = await importSecretKey(password);
         return window.crypto.subtle.deriveKey({
@@ -125,7 +122,6 @@ export async function decryptFile(blob: Blob, password:string, filename:string) 
           DEC.perms2 //limited to the options encrypt and decrypt
         )
       }
-
       const derivedKey = await deriveDecryptionSecretKey(); //requiring the key
       // @ts-ignore
       const iv = new Uint8Array(fr.result.slice(19, 19+16)); //take out encryption iv
@@ -139,7 +135,9 @@ export async function decryptFile(blob: Blob, password:string, filename:string) 
           console.log(decrypted);
           const decryptBlob = new Blob([new Uint8Array(decrypted)],
             {type: 'application/octet-stream'})
-          saveAs(decryptBlob, filename);
+          const name = (filename||'').replace(/_$/, '');
+          console.log(name);
+          saveAs(decryptBlob, name);
           resolve();
         },(e) => {
           reject()
