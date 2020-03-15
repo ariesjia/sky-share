@@ -135,7 +135,7 @@ export async function decryptFile(blob: Blob, password:string, filename:string) 
           console.log(decrypted);
           const decryptBlob = new Blob([new Uint8Array(decrypted)],
             {type: 'application/octet-stream'})
-          const name = (filename||'').replace(/_$/, '');
+          const name = (filename||'').replace(/\"$/, '').replace(/^\"/, '');
           console.log(name);
           saveAs(decryptBlob, name);
           resolve();
